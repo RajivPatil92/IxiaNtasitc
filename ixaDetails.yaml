@@ -1,0 +1,104 @@
+ixiaVM: 172.16.1.1
+ixiaAPIServerPort: 8009
+ixVersion: 9.00
+ixiaChassis:
+  - name: ixiaChassis1
+    ports:
+      - slot: 1
+        port: 1
+        topology:
+          name: Topology1
+          deviceGroup:
+            - -name: NormalIPv4_1
+              ethernet/1:
+                -mtu:
+                  /singleValue:
+                    -value: 9214
+                ipv4/1:
+                  -address:
+                    /counter:
+                      -start: 1.1.1.1
+                      -step: 0.0.0.1
+                  -gatewayIp:
+                    /counter:
+                      -start: 1.1.1.254
+                      -step: 0.0.0.0
+                  -resolveGateway:
+                    /singlevalue:
+                      -value: True
+                  ospfv2/1:
+                    port/1:
+                      -maxMtu:
+                        /singleValue:
+                          -value: 9214
+                    -networkType:
+                      -pattern: singleValue
+                      -clearOverlays: False
+                    /singleValue:
+                      -value: pointtopoint
+              -multiplier: 2
+              networkGroup/1:
+                -name: CustA
+                ipv4PrefixPools/1:
+                  -networkAddress:
+                    /counter:
+                      -start: 101.0.1.1
+                      -step: 0.0.0.1
+                  -prefixLength:
+                    /singlevalue:
+                      -value: 32
+                  connector/1:
+                    -connectedTo: ::ixNet::OBJ-/topology:1/deviceGroup:1/ethernet:1/ipv4:1/ospfv2:1
+                  -numberOfAddressesAsy:
+                    /singlevalue:
+                      -value: 10
+                  -count: 10
+      - slot: 1
+        port: 2
+        topology:
+          name: Topology2
+          deviceGroup:
+            - -name: NormalIpv4_2
+              ethernet/1:
+                -mtu:
+                  /singleValue:
+                    -value: 9214
+                ipv4/1:
+                  -address:
+                    /counter:
+                      -start: 1.1.100.1
+                      -step: 0.0.0.1
+                  -gatewayIp:
+                    /counter:
+                      -start: 1.1.100.254
+                      -step: 0.0.0.0
+                  -resolveGateway:
+                    /singleValue:
+                      -value: True
+                  ospfv2/1:
+                    port/1:
+                      -maxMtu:
+                        /singleValue:
+                          -value: 9214
+                    -networkType:
+                      -pattern: singleValue
+                      -clearOverlays: False
+                    /singleValue:
+                      -value: pointtopoint
+              networkGroup/1:
+                -name: CustB
+                ipv4PrefixPools/1:
+                  -networkAddress:
+                    /counter:
+                      -start: 102.0.1.1
+                      -step: 0.0.0.1
+                  -prefixLength:
+                    /singlevalue:
+                      -value: 32
+                  connector/1:
+                    -connectedTo: ::ixNet::OBJ-/topology:2/deviceGroup:1/ethernet:1/ipv4:1/ospfv2:1
+                  -numberOfAddressesAsy:
+                    /singlevalue:
+                      -value: 10
+              -multiplier: 2
+
